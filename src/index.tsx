@@ -205,6 +205,7 @@ function Root({
   function onDrag(event: React.PointerEvent<HTMLDivElement>) {
     // We need to know how much of the drawer has been dragged in percentages so that we can transform background accordingly
     if (isDragging) {
+      console.log('event.screenY', event.screenY);
       const draggedDistance = pointerStartY.current - event.screenY;
       const isDraggingDown = draggedDistance > 0;
 
