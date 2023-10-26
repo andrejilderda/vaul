@@ -49,6 +49,10 @@ type DialogProps = {
   onClose?: () => void;
 } & (WithFadeFromProps | WithoutFadeFromProps);
 
+const logClickedElement = (e: MouseEvent) => {
+  console.log('clicked', e.target);
+};
+
 function Root({
   open: openProp,
   onOpenChange,
@@ -88,6 +92,12 @@ function Root({
   const drawerRef = React.useRef<HTMLDivElement>(null);
   const drawerHeightRef = React.useRef(drawerRef.current?.getBoundingClientRect().height || 0);
   const initialDrawerHeight = React.useRef(0);
+
+  React.useEffect(() => {
+    document.addEventListener('click', logClickedElement);
+
+    return () => document.removeEventListener('click', logClickedElement);
+  }, []);
 
   const onSnapPointChange = React.useCallback((activeSnapPointIndex: number) => {
     // Change openTime ref when we reach the last snap point to prevent dragging for 500ms incase it's scrollable.
@@ -205,7 +215,6 @@ function Root({
   function onDrag(event: React.PointerEvent<HTMLDivElement>) {
     // We need to know how much of the drawer has been dragged in percentages so that we can transform background accordingly
     if (isDragging) {
-      console.log('event.screenY', event.screenY);
       const draggedDistance = pointerStartY.current - event.screenY;
       const isDraggingDown = draggedDistance > 0;
 
