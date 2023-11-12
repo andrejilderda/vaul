@@ -4,7 +4,12 @@ import { Drawer } from 'vaul';
 
 export default function Page() {
   return (
-    <div className="w-screen h-screen bg-white p-8 flex justify-center items-center" vaul-drawer-wrapper="">
+    <div className="w-screen bg-white p-8 flex justify-center items-center flex-col" vaul-drawer-wrapper="">
+      {Array(100)
+        .fill(0)
+        .map((_, i) => (
+          <p key={i}>{i}</p>
+        ))}
       <Drawer.Root>
         <Drawer.Trigger asChild>
           <button>Open Drawer</button>
